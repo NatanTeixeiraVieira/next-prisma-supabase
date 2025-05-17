@@ -5,8 +5,11 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { formatCurrency } from "@/utils/currency"
 
-export default async function ProductDetailPage({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id)
+type ProductDetailPageProps = { params: Promise<{ id: string }> }
+
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const {id} = await params
+  const product = await getProduct(id)
 
   if (!product) {
     notFound()

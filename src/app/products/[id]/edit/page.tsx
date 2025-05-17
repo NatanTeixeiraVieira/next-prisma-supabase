@@ -4,8 +4,11 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id)
+type EditProductPageProps = { params: Promise<{ id: string }> }
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
+  const {id} = await params
+  const product = await getProduct(id)
 
   if (!product) {
     notFound()
